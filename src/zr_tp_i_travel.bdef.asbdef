@@ -1,0 +1,156 @@
+managed implementation in class zbp_r_tp_i_travel unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_TP_I_TRAVEL //alias <alias_name>
+persistent table ztp_travel
+draft table ztp_travel_d
+lock master total etag lastchangedat
+authorization master ( instance )
+etag master lastchangedat
+early numbering
+{
+  create ( authorization : global );
+  update( features : instance ) ;
+  delete;
+  field ( readonly : update ) agencyid ;
+  field ( readonly ) travelid, lastchangedat, status;
+ field ( mandatory) description, customerid, begindate, enddate;
+
+   action ( features : instance)cancel_travel ;
+
+  validation validatedescription on save { create; field description; }
+  validation validatecustomer on save { create; field customerid; }
+  validation validatebegindate on save { create; field begindate; }
+  validation validateenddate on save { create; field enddate; }
+  validation validatedatesequence on save { create; update; field enddate; }
+
+  field (features : instance ) customerid,begindate;
+
+association  _item { create; with draft;}
+
+
+  draft action Edit;
+  draft action Resume;
+  draft action Discard;
+  draft determine action Prepare
+  {
+ validation validateDescription;
+ validation  validatecustomer;
+ validation validateBeginDate;
+ validation validateEndDate;
+
+}
+  draft action Activate;
+
+  static action issue_message;
+
+
+determination determinestatus on save  { create; update; }
+determination determineduration on save { field begindate, enddate; }
+
+determine action checkduration {
+     validation validatebegindate;
+     validation validateenddate;
+     validation validatedatesequence;
+     determination determineduration; }
+
+     side effects {
+     determine action checkduration
+     executed on field BeginDate , field EndDate
+     affects field Duration , messages ;
+}
+  mapping for ztp_travel
+    {
+      TravelId      = travel_id;
+      agencyid      = agency_id;
+      EndDate       = end_date;
+      begindate     = begin_date;
+      customerid    = customer_id;
+      BookingFee    = booking_fee;
+      TotalPrice    = total_price;
+      CurrencyCode  = currency_code;
+      Description   = description;
+      Status        = status;
+      //      @Semantics.systemDateTime.lastChangedAt: true
+      lastchangedat = lastchangedat;
+    }
+
+}
+ define behavior for ZL_TP_TRAVELITEM alias Item
+ persistent table ztp_travelitem
+ draft table ZTP_TRAVELITEM_D
+authorization dependent by _travel
+lock dependent by _travel
+etag master Lastchangeat
+{
+//======================================================================
+// CRUD Operations
+//======================================================================
+
+ update;
+ delete;
+
+//======================================================================
+// Field Control
+//======================================================================
+
+ field ( readonly , numbering : managed ) ItemUuid;
+ field ( readonly ) AgencyId , TravelId , lastchangeat;
+
+//======================================================================
+// Validations
+// Executed during Save/Activate time
+//======================================================================
+
+validation validateFlightDate on save
+{ create;
+  field FlightDate;
+}
+
+//======================================================================
+// Determinations
+//======================================================================
+
+determination determineTravelDates on save
+{ field FlightDate;
+}
+
+//determine action validflight{
+//        validation validateFlightDate;
+//}
+
+//======================================================================
+// Side Effects
+// Refreshes UI immediately after field changes
+//======================================================================
+
+//side effects {
+//determine action validflight
+//  executed on field FlightDate
+//  affects messages ;
+//  }
+//======================================================================
+// Parent Association
+//======================================================================
+
+ association  _travel { with draft;}
+
+//======================================================================
+// Persistent Table Mapping
+//======================================================================
+
+ mapping for ZTP_TRAVELitem
+ {
+    ItemUuid = item_uuid ;
+    AgencyId = agency_id ;
+    TravelId = travel_id;
+    CarrierId = carrier_id;
+    ConnectionId = connection_id;
+    FlightDate = flight_date;
+    BookingId = booking_id;
+    PassengerFirstName = passenger_first_name;
+    PassengerLastName = passenger_last_name;
+    Lastchangeat = lastchangeat;
+    }
+ }

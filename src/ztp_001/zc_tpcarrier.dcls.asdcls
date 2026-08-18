@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZC_TPCARRIER'
+@MappingRole: true
+define role ZC_TPCARRIER {
+  grant select on ZC_TPCARRIER
+  where INHERITING CONDITIONS FROM ENTITY ZR_TPCARRIER REPLACING { ROOT WITH _BaseEntity };
+}

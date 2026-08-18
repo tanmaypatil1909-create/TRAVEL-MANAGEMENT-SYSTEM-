@@ -1,0 +1,87 @@
+CLASS zcl_populate_material_19 DEFINITION
+  PUBLIC FINAL CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+
+ENDCLASS.
+
+
+
+CLASS ZCL_POPULATE_MATERIAL_19 IMPLEMENTATION.
+
+
+  METHOD if_oo_adt_classrun~main.
+
+    DATA: lt_material TYPE STANDARD TABLE OF zso_material_19.
+
+    lt_material = VALUE #(
+      ( client         = sy-mandt
+        material_id    = 'LAPTOP'
+        material_name  = 'Laptop'
+        unit           = 'EA'
+        currency_code  = 'USD'
+        unit_price     = '500.00'
+        stock_quantity = '15.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'MOUSE'
+        material_name  = 'Mouse'
+        unit           = 'EA'
+        currency_code  = 'INR'
+        unit_price     = '100.00'
+        stock_quantity = '50.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'KEYBOARD'
+        material_name  = 'Keyboard'
+        unit           = 'EA'
+        currency_code  = 'INR'
+        unit_price     = '200.00'
+        stock_quantity = '30.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'MONITOR'
+        material_name  = 'Monitor'
+        unit           = 'EA'
+        currency_code  = 'INR'
+        unit_price     = '350.00'
+        stock_quantity = '10.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'CAMERA'
+        material_name  = 'Camera'
+        unit           = 'EA'
+        currency_code  = 'EUR'
+        unit_price     = '300.00'
+        stock_quantity = '8.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'SPEAKER'
+        material_name  = 'Speaker'
+        unit           = 'EA'
+        currency_code  = 'GBP'
+        unit_price     = '150.00'
+        stock_quantity = '20.00' )
+
+      ( client         = sy-mandt
+        material_id    = 'PRINTER'
+        material_name  = 'Printer'
+        unit           = 'EA'
+        currency_code  = 'JPY'
+        unit_price     = '25000.00'
+        stock_quantity = '12.00' )
+    ).
+
+    MODIFY zso_material_19 FROM TABLE @lt_material.
+
+    IF sy-subrc = 0.
+      out->write( |Records inserted: { lines( lt_material ) }| ).
+      COMMIT WORK.
+    ELSE.
+      out->write( 'Insert failed.' ).
+      ROLLBACK WORK.
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.

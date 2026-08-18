@@ -1,0 +1,30 @@
+projection;
+strict(2);
+use draft;
+
+define behavior for ZC_PO_HEADER_19 alias PurchaseOrder
+{
+  use create;
+  use update;
+  use delete;
+
+  use action SubmitForApproval;
+  use action Approve;
+  use action Reject;
+
+  use association _Items { create; with draft; }
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}
+
+define behavior for ZC_PO_ITEM_19 alias PurchaseOrderItem
+{
+  use update;
+  use delete;
+
+  use association _Header { with draft; }
+}

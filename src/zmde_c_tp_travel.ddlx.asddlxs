@@ -1,0 +1,114 @@
+@Metadata.layer: #CORE
+annotate entity ZC_TP001_TRAVEL with
+{
+
+  @UI.facet: [
+    {
+      id      : 'Travel',
+      purpose : #STANDARD,
+      type    : #IDENTIFICATION_REFERENCE,
+      label   : 'Travel',
+      position: 10
+    },
+   {
+    id: 'TravelItems',
+    type: #LINEITEM_REFERENCE,
+    targetElement: '_item',
+    label: 'Travel Items',
+    position: 20
+},     
+    
+    {
+      id             : 'Dates',
+      purpose        : #STANDARD,
+      type           : #FIELDGROUP_REFERENCE,
+      targetQualifier: 'Dates',
+      label          : 'Travel Dates',
+      position       : 20
+    },
+    {
+      id             : 'Prices',
+      purpose        : #STANDARD,
+      type           : #FIELDGROUP_REFERENCE,
+      targetQualifier: 'Prices',
+      label          : 'Pricing',
+      position       : 30
+    }
+  ]
+
+ @UI.lineItem: [{ position: 10, importance: #HIGH, label: 'Travel ID' }]
+@UI.identification: [{ position: 10, label: 'Travel ID' }]
+@UI.selectionField: [{ position: 10 }]
+TravelId;
+  
+
+  @UI.lineItem: [{ position: 20, importance: #HIGH, label: 'Agency ID' }]
+  @UI.identification: [{ position: 20, label: 'Agency ID' }]
+  @UI.selectionField: [{ position: 20 }]
+  AgencyId;
+
+  @UI.lineItem: [{ position: 30, importance: #HIGH, label: 'Customer ID' }]
+  @UI.identification: [{ position: 30, label: 'Customer ID' }]
+  @UI.selectionField: [{ position: 30 }]
+  CustomerId;
+
+  @UI.fieldGroup: [{ qualifier: 'Dates', position: 10, label: 'Begin Date' }]
+  @UI.lineItem: [{ position: 40, importance: #MEDIUM, label: 'Begin Date' }]
+  BeginDate;
+
+  @UI.fieldGroup: [{ qualifier: 'Dates', position: 20, label: 'End Date' }]
+  @UI.lineItem: [{ position: 50, importance: #MEDIUM, label: 'End Date' }]
+  EndDate;
+
+  @UI.fieldGroup: [{ qualifier: 'Prices', position: 10, label: 'Booking Fee' }]
+  @UI.lineItem: [{ position: 60, importance: #MEDIUM, label: 'Booking Fee' }]
+  BookingFee;
+
+  @UI.fieldGroup: [{ qualifier: 'Prices', position: 20, label: 'Total Price' }]
+  @UI.lineItem: [{ position: 70, importance: #HIGH, label: 'Total Price' }]
+  TotalPrice;
+
+  @UI.hidden: true
+  CurrencyCode;
+
+  @UI.lineItem: [{ position: 80, importance: #LOW, label: 'Description' }]
+  @UI.identification: [{ position: 40, label: 'Description' }]
+  Description;
+
+  @UI.textArrangement: #TEXT_ONLY
+  @UI.lineItem: [{ position: 90, importance: #HIGH, label: 'Status' }]
+  @UI.identification: [{ position: 70, importance: #HIGH, label: 'Status' }]
+  @UI.selectionField: [{ position: 40 }]
+  Status;
+
+  @UI.identification: [{ position: 110, label: 'Last Changed At' }]
+  lastchangedat;
+  
+    @UI.fieldGroup: [
+    {
+      qualifier: 'Dates',
+      position: 30,
+      label: 'Duration (Days)'
+    }
+  ]
+  @UI.lineItem: [
+    {
+      position: 55,
+      importance: #HIGH,
+      label: 'Duration (Days)'
+    }
+  ]
+  @UI.identification: [
+    {
+      position: 35,
+      label: 'Duration (Days)'
+    }
+  ]
+  @UI.selectionField: [
+    {
+      position: 30
+    }
+  ]
+  Duration;
+
+}

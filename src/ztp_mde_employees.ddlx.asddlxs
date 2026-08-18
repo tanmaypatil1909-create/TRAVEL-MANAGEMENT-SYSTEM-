@@ -1,0 +1,89 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+        typeName: 'Employee',
+        typeNamePlural: 'Employees',
+        title: { type: #STANDARD, value: 'Empid' },
+        description: { type: #STANDARD, value: 'Fname' }
+    }
+}
+
+annotate view ZC_TP_I_EMPLOYEE with
+{
+    @UI.facet: [
+        {
+            id: 'EmployeeDetails',
+            purpose: #STANDARD,
+            type: #IDENTIFICATION_REFERENCE,
+            label: 'Employee Details',
+            position: 10
+        }
+    ]
+
+    @UI.hidden: true
+    EmpUuid;
+
+    @UI: {
+        lineItem: [{ position: 10, importance: #HIGH, label: 'Employee ID' }],
+        identification: [{ position: 10, label: 'Employee ID' }],
+        selectionField: [{ position: 10 }]
+    }
+    @EndUserText.label: 'Employee ID'
+    EmpId;
+
+    @UI: {
+        lineItem: [{ position: 20, importance: #HIGH, label: 'First Name' }],
+        identification: [{ position: 20, label: 'First Name' }],
+        selectionField: [{ position: 20 }]
+    }
+    @EndUserText.label: 'First Name'
+    Fname;
+
+    @UI: {
+        lineItem: [{ position: 30, importance: #HIGH, label: 'Last Name' }],
+        identification: [{ position: 30, label: 'Last Name' }],
+        selectionField: [{ position: 30 }]
+    }
+    @EndUserText.label: 'Last Name'
+    Lname;
+
+    @UI.hidden: true
+    Currencycode;
+
+    @UI: {
+        lineItem: [{ position: 40, importance: #HIGH, label: 'Salary' }],
+        identification: [{ position: 40, label: 'Salary' }]
+    }
+    @EndUserText.label: 'Salary'
+    Salary;
+
+    @UI: {
+        lineItem: [{ position: 50, importance: #MEDIUM, label: 'Date of Birth' }],
+        identification: [{ position: 50, label: 'Date of Birth' }]
+    }
+    @EndUserText.label: 'Date of Birth'
+    Dob;
+
+    @UI: {
+        lineItem: [{ position: 60, importance: #MEDIUM, label: 'Age' }],
+        identification: [{ position: 60, label: 'Age' }]
+    }
+    @EndUserText.label: 'Age'
+    Age;
+
+    @UI: {
+        lineItem: [{ position: 70, importance: #LOW, label: 'Changed By' }],
+        identification: [{ position: 70, label: 'Changed By' }]
+    }
+    @EndUserText.label: 'Changed By'
+    Changedby;
+
+    @UI: {
+        lineItem: [{ position: 80, importance: #LOW, label: 'Last Changed At' }],
+        identification: [{ position: 80, label: 'Last Changed At' }]
+    }
+    @EndUserText.label: 'Last Changed At'
+    Lastchangedat;
+
+}

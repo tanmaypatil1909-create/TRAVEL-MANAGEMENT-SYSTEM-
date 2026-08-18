@@ -1,0 +1,5 @@
+@EndUserText.label: 'Sales Order OData Service'
+define service ZUI_SO_SERVICE_19 {
+  expose ZC_SO_HEADER_19 as SalesOrders;
+  expose ZC_SO_ITEM_19   as SalesOrderItems;
+}

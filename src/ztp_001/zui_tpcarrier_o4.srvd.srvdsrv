@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_TPCARRIER'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_TPCARRIER'
+  }
+}
+define service ZUI_TPCARRIER_O4 provider contracts odata_v4_ui {
+  expose ZC_TPCARRIER;
+}

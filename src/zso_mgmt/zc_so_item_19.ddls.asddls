@@ -1,0 +1,43 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Sales Order Item Projection'
+@Metadata.allowExtensions: true
+
+define view entity ZC_SO_ITEM_19
+  as projection on ZI_SO_ITEM_19
+{
+    key sales_order_uuid,
+    key item_no,
+
+    @EndUserText.label: 'Material'
+    material_id,
+
+    @EndUserText.label: 'Quantity'
+    quantity,
+
+    @EndUserText.label: 'Unit'
+    unit,
+
+    @EndUserText.label: 'Unit Price'
+    unit_price,
+
+    @EndUserText.label: 'Currency'
+    currency_code,
+
+    @EndUserText.label: 'Item Amount'
+    item_amount,
+    
+    @EndUserText.label: 'Item Amount (USD)'
+    item_amount_usd,
+    
+    @EndUserText.label: 'Reference Price (USD)'
+    unit_price_usd,
+
+    created_by,
+    created_at,
+    last_changed_by,
+    last_changed_at,
+    local_last_changed_at,
+
+    _Header : redirected to parent ZC_SO_HEADER_19,
+    _Material
+}

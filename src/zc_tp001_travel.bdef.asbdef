@@ -1,0 +1,36 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_TP001_TRAVEL alias travel
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+   use action Edit;
+ use action Resume;
+ use action activate;
+ use action Discard;
+ use action Prepare;
+ use action cancel_travel;
+  use action issue_message;
+  use action checkduration;
+
+  use association _item { create ; with draft;}
+       side effects {
+     determine action checkduration
+     executed on field BeginDate , field EndDate
+     affects field Duration , messages ;
+}
+}
+define behavior for zc_tp_travelitem
+use etag
+{
+ use update;
+ use delete;
+
+ use association _travel {with draft;}
+
+ }

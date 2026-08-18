@@ -1,0 +1,4 @@
+@EndUserText.label: 'ZTP_SRD_EMPLOYEE'
+define service ZTP_SRD_EMPLOYEE {
+  expose ZC_TP_I_EMPLOYEE;
+}

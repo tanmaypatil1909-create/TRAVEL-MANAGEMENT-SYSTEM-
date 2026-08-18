@@ -1,0 +1,93 @@
+managed implementation in class zbp_i_po_header_19 unique;
+strict(2);
+with draft;
+
+define behavior for ZI_PO_HEADER_19 alias PurchaseOrder
+persistent table zpo_header_19
+draft table zpo_header_19_d
+lock master
+total etag LocalLastChangedAt
+authorization master( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+ field ( readonly ) PoUuid, ApprovalLevelRequired, CurrentApprovalLevel, Status, RejectionReason;
+field ( mandatory ) VendorId, PoDate, TotalAmount;
+
+
+  determination DetermineApprovalLevel on modify { field TotalAmount; }
+  determination SetPoId on save { create; }
+
+  validation ValidateVendor on save { field VendorId; }
+
+ action ( features : instance ) SubmitForApproval result [1] $self;
+action ( features : instance ) Approve result [1] $self;
+action ( features : instance ) Reject parameter ZI_PO_REJECT_19 result [1] $self;
+
+  association _Items { create; with draft; }
+
+
+  mapping for zpo_header_19
+  {
+    PoUuid                 = po_uuid;
+    PoId                   = po_id;
+    VendorId                = vendor_id;
+    PoDate                  = po_date;
+    CurrencyCode             = currency_code;
+    TotalAmount              = total_amount;
+    Status                   = status;
+    ApprovalLevelRequired    = approval_level_required;
+    CurrentApprovalLevel     = current_approval_level;
+    RejectionReason          = rejection_reason;
+    CreatedBy                = created_by;
+    CreatedAt                = created_at;
+    LastChangedBy            = last_changed_by;
+    LastChangedAt             = last_changed_at;
+    LocalLastChangedAt        = local_last_changed_at;
+  }
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+}
+
+define behavior for ZI_PO_ITEM_19 alias PurchaseOrderItem
+persistent table zpo_item_19
+draft table zpo_item_19_d
+lock dependent by _Header
+authorization dependent by _Header
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+
+ field ( readonly ) PoItemUuid, PoUuid, ItemAmount;
+  field ( mandatory ) MaterialId, Quantity;
+
+  determination CalculateItemAmount on modify { field Quantity, UnitPrice; }
+
+
+  validation ValidateItemLock on save { field Quantity, UnitPrice, MaterialId; }
+
+  association _Header { with draft; }
+  association _Material;
+
+  mapping for zpo_item_19
+  {
+    PoItemUuid    = po_item_uuid;
+    PoUuid         = po_uuid;
+    ItemNo         = item_no;
+    MaterialId     = material_id;
+    Quantity       = quantity;
+    Unit           = unit;
+    UnitPrice      = unit_price;
+    CurrencyCode   = currency_code;
+    ItemAmount     = item_amount;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

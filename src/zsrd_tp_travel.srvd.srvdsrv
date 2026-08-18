@@ -1,0 +1,5 @@
+@EndUserText.label: 'SERVICE DEFINATION FOR TRAVEL'
+define service ZSRD_TP_TRAVEL {
+  expose ZC_TP001_TRAVEL  as TRAVEL;
+  expose zc_tp_travelitem as TRAVELITEM;
+}

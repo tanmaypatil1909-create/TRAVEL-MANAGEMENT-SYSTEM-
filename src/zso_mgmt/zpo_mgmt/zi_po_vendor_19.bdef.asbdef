@@ -1,0 +1,20 @@
+managed implementation in class zbp_i_po_vendor_19 unique;
+strict(2);
+
+define behavior for ZI_PO_VENDOR_19 alias Vendor
+persistent table zpo_vendor_19
+lock master
+authorization master( instance )
+{
+
+field ( readonly ) VendorUuid;
+
+  mapping for zpo_vendor_19
+  {
+    VendorUuid  = vendor_uuid;
+    VendorId    = vendor_id;
+    VendorName  = vendor_name;
+    City        = city;
+    Country     = country;
+  }
+}
